@@ -15,3 +15,7 @@ def user_addone_controller():
 def user_update_controller():
     return obj.user_update_model(request.form)
     
+@app.route("/user/delete/<idusers>", methods=["DELETE"])
+def user_delete_controller(idusers):
+    return obj.user_delete_model(idusers)
+    

@@ -36,3 +36,11 @@ class user_modal():
             return "Nothing to Update"                            
        
         
+    def user_delete_model(self, idusers):
+        self.cur.execute(f"DELETE FROM users WHERE idusers={idusers} ")
+        if self.cur.rowcount>0:
+            return "User Deleted Successfully"
+        else:
+            return "Nothing to Delete"                            
+       
+        
