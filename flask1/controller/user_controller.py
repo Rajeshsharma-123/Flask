@@ -19,3 +19,7 @@ def user_update_controller():
 def user_delete_controller(idusers):
     return obj.user_delete_model(idusers)
     
+@app.route("/user/patch/<idusers>", methods=["PATCH"])
+def user_patch_controller(idusers):
+    return obj.user_patch_model(request.form, idusers)
+    

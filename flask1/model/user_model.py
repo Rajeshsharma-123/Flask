@@ -11,16 +11,14 @@ class user_modal():
         except:
             print("some errors!")
          
-        
-        
-    
-    
     def user_getall_model(self):
         
         self.cur.execute("SELECT * FROM users ")
         result=self.cur.fetchall()
         if len(result)>0:
-            return make_response({"payload":result},200)
+            res = make_response({"payload":result},200)
+            res.headers['Access-Control-Allow-Origin'] = "*"
+            return res
             # return json.dumps(result)
         else:
             return make_response({"message":"No Data found"},204)
@@ -45,4 +43,24 @@ class user_modal():
         else:
             return make_response({"message":"Nothing to Delete"},202)                            
        
+
+    def user_patch_model(self, data, idusers):
+        qry = "UPDATE users SET "
+        for key in data:
+           qry += f"{key}='{data[key]}',"
         
+        qry = qry[:-1] + f" WHERE idusers={idusers}"
+
+        self.cur.execute(qry)
+
+        if self.cur.rowcount>0:
+            return make_response({"message":"User Updated Successfully"},201)
+        else:
+            return make_response({"message":"Nothing to Update"},202)
+
+        # UPDATE users SET col=val, col=val WHERE id={id}
+          
+        
+        
+    
+    
