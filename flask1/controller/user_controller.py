@@ -3,11 +3,11 @@ from model.user_model import user_modal
 from flask import request
 obj = user_modal()
 
-@app.route("/user/getall")
+@app.route("/user/getall", methods=["GET"])
 def user_getall_controller():
     return obj.user_getall_model()
 
-@app.route("/user/addone")
+@app.route("/user/addone", methods=["GET"])
 def user_addone_controller():
     return obj.user_addone_model(request.form)
     
