@@ -23,3 +23,7 @@ def user_delete_controller(idusers):
 def user_patch_controller(idusers):
     return obj.user_patch_model(request.form, idusers)
     
+@app.route("/user/getall/limit/<limit>/page/<page>", methods=["GET"])
+def user_pagination_controller(limit, page):
+    return obj.user_pagination_model(limit, page)
+    

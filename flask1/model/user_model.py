@@ -59,7 +59,21 @@ class user_modal():
             return make_response({"message":"Nothing to Update"},202)
 
         # UPDATE users SET col=val, col=val WHERE id={id}
+
+    def user_pagination_model(self, limit, page):
+         limit  = int(limit)
+         page = int(page)
+         start = (page * limit) - limit
+         qry = f"SELECT * FROM users LIMIT {start}, {limit}"
+         self.cur.execute(qry)
+         result=self.cur.fetchall()
+         if len(result)>0:
+            res = make_response({"payload":result, "page_no":page, "limit": limit} ,200)
+            
+            return res
           
+         else:
+            return make_response({"message":"No Data found"},204)
         
         
     
