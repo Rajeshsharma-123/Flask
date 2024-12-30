@@ -58,7 +58,7 @@ class user_modal():
         else:
             return make_response({"message":"Nothing to Update"},202)
 
-        # UPDATE users SET col=val, col=val WHERE id={id}
+        # UPDATE users SET col=  val, col=val WHERE id={id}
 
     def user_pagination_model(self, limit, page):
          limit  = int(limit)
@@ -76,5 +76,17 @@ class user_modal():
             return make_response({"message":"No Data found"},204)
         
         
+    def user_upload_avatar_model(self, uid, filepath):
+        self.cur.execute("UPDATE users SET avatar=%s WHERE idusers=%s",(filepath, uid))
+        if self.cur.rowcount>0:
+            return make_response({"message":"FILE UPLOADED Successfully"},201)
+        else:
+            return make_response({"message":"Nothing to Update"},202)
+                 
     
+
+    
+                                
+       
+  
     
