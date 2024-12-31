@@ -83,7 +83,11 @@ class user_modal():
         else:
             return make_response({"message":"Nothing to Update"},202)
                  
-    
+    def user_login_model(self, data):
+        self.cur.execute(f"SELECT idusers, name, email, phone, avatar, role_id FROM users WHERE email='{data['email']}' and password='{data['password']}'")
+        result = self.cur.fetchall()
+        userdata = result[0]
+        return str(result[0])
 
     
                                 
