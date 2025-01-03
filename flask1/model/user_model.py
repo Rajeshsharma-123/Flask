@@ -1,6 +1,8 @@
 import mysql.connector
 import json
 from flask import make_response
+from datetime import datetime,timedelta
+import jwt
 class user_modal():
     def __init__(self):
         try:
@@ -87,7 +89,16 @@ class user_modal():
         self.cur.execute(f"SELECT idusers, name, email, phone, avatar, role_id FROM users WHERE email='{data['email']}' and password='{data['password']}'")
         result = self.cur.fetchall()
         userdata = result[0]
-        return str(result[0])
+        exp_time = datetime.now() + timedelta(minutes=15)
+        exp_epoch_time = int(exp_time.timestamp())
+        payload = {
+            "payload" : userdata,
+            "exp": exp_epoch_time
+        }
+        jwtoken = jwt.encode(payload, "rajesh", algorithm="HS256")
+        return make_response({"token":jwtoken}, 200)
+
+
 
     
                                 
