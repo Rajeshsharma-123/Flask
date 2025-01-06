@@ -3,10 +3,11 @@ import json
 from flask import make_response
 from datetime import datetime,timedelta
 import jwt
+from config.config import dbconfig
 class user_modal():
     def __init__(self):
         try:
-            self.con=mysql.connector.connect(host="localhost",user="root",password="Rsharma#123",database="flask_tutorail")
+            self.con=mysql.connector.connect(host=dbconfig['hostname'],user=dbconfig['username'],password=dbconfig['password'],database=dbconfig['database'])
             self.con.autocommit=True
             self.cur=self.con.cursor(dictionary=True)
             print("Connection Successfull")
