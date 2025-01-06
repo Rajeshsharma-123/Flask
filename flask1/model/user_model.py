@@ -28,11 +28,27 @@ class user_modal():
         
     def user_addone_model(self, data):
         
-        self.cur.execute(f"INSERT INTO users(name, email, phone, role, password) VALUES('{data['name']}', '{data['email']}', '{data['phone']}', '{data['role']}', '{data['password']}')")
+        self.cur.execute(f"INSERT INTO users(name, email, phone, role_id, password) VALUES('{data['name']}', '{data['email']}', '{data['phone']}', '{data['role_id']}', '{data['password']}')")
         return make_response({"message":"User Created Successfully"},201)                             
-       
+
+    def user_add_multiple_model(self, data):
+        """
+         Add multiple users to the database securely using parameterized queries.
+        """
+        qry = "INSERT INTO users(name, email, phone, role_id, password) VALUES (%s, %s, %s, %s, %s)"
+        user_data_tuples = [
+        (user['name'], user['email'], user['phone'], user['role_id'], user['password']) 
+        for user in data
+        ]
+
+        try:
+            self.cur.executemany(qry, user_data_tuples)
+            return make_response({"message": "MULTIPLE_USERS_CREATED"}, 201)
+        except Exception as e:
+            return make_response({"error": str(e)}, 500)                            
+
     def user_update_model(self, data):
-        self.cur.execute(f"UPDATE users SET name='{data['name']}', email='{data['email']}' , phone='{data['phone']}' , role='{data['role']}', password='{data['password']}' WHERE idusers={data['idusers']} ")
+        self.cur.execute(f"UPDATE users SET name='{data['name']}', email='{data['email']}' , phone='{data['phone']}' , role_id='{data['role_id']}', password='{data['password']}' WHERE idusers={data['idusers']} ")
         if self.cur.rowcount>0:
             return make_response({"message":"User Updated Successfully"},201)
         else:
